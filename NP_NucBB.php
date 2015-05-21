@@ -242,7 +242,7 @@ COMMNETFORMLOGINED;
 					$url = addslashes(requestVar('nucbburl'));
 					$mem = MEMBER::createFromName('NucBBUser');
 					$authorid = $mem->id;
-					$contents = htmlspecialchars($contents);
+					$contents = hsc($contents);
 					$remember = intPostVar('nucbbremember');
 					if ($remember == 1) {
 						$lifetime = time()+2592000;
@@ -338,7 +338,7 @@ COMMNETFORMLOGINED;
 					$username = addslashes(requestVar('nucbbuser'));
 					$email = addslashes(requestVar('nucbbemail'));
 					$url = addslashes(requestVar('nucbburl'));
-					$contents = htmlspecialchars($contents);
+					$contents = hsc($contents);
 				}
 				$blog = new BLOG($blogid);
 				$time = $blog->getCorrectTime();
@@ -884,8 +884,8 @@ EDITCOMMENTFORM;
 		$height = $matches[3];
 		$popup = "window.open(this.href,'imagepopup','status=no,toolbar=no,scrollbars=no,resizable=yes,width=$width,height=$height');return false;";
 		$text = $this->getBlogOption($item['blogid'], 'photolinktext');
-		$rawlink = $CONF['Self'] . "?imagepopup=" . htmlspecialchars($filename) . "&amp;width=$width&amp;height=$height&amp;imagetext=" . urlencode(htmlspecialchars($text));
-		$link = '<a href="' . $rawlink. '" onclick="'. $popup.'" >' . htmlspecialchars($text) . '</a>';
+		$rawlink = $CONF['Self'] . "?imagepopup=" . hsc($filename) . "&amp;width=$width&amp;height=$height&amp;imagetext=" . urlencode(hsc($text));
+		$link = '<a href="' . $rawlink. '" onclick="'. $popup.'" >' . hsc($text) . '</a>';
 
 //		$link = '<a href="' . $filename. '" onclick="'. $popup.'" >' . $text . '</a>';
 		return $link;
@@ -1241,7 +1241,7 @@ EDITCOMMENTFORM;
 				}
 			} else {
 				if(cookieVar('comment_user')){
-					$replace_array['<%username%>'] = htmlspecialchars(cookieVar('comment_user'));
+					$replace_array['<%username%>'] = hsc(cookieVar('comment_user'));
 					$replace_array['<%remember%>'] = 'checked="checked"';
 				} else {
 					if ($mode == 'add') {
@@ -1253,8 +1253,8 @@ EDITCOMMENTFORM;
 					}
 				}
 				if (cookieVar('comment_userid')) {
-					$replace_array['<%mail%>'] = htmlspecialchars(cookieVar('comment_userid2'));
-					$replace_array['<%url%>'] = htmlspecialchars(cookieVar('comment_userid'));
+					$replace_array['<%mail%>'] = hsc(cookieVar('comment_userid2'));
+					$replace_array['<%url%>'] = hsc(cookieVar('comment_userid'));
 				} else {
 					if ($mode == 'add') {
 						$replace_array['<%mail%>'] = '';
@@ -1329,14 +1329,14 @@ EDITCOMMENTFORM;
 					$replace_array['<%username%>'] = $this->getusername($member, $commentobj['blogid']);
 				} else {
 					if (cookieVar('comment_user')) {
-						$replace_array['<%username%>'] = htmlspecialchars(cookieVar('comment_user'));
+						$replace_array['<%username%>'] = hsc(cookieVar('comment_user'));
 						$replace_array['<%remember%>'] = 'checked="checked"';
 					}else{
 						$replace_array['<%username%>'] = '';
 						$replace_array['<%remember%>'] = '';
 					}
-					$replace_array['<%mail%>'] = htmlspecialchars(cookieVar('comment_userid2'));
-					$replace_array['<%url%>'] = htmlspecialchars(cookieVar('comment_userid'));
+					$replace_array['<%mail%>'] = hsc(cookieVar('comment_userid2'));
+					$replace_array['<%url%>'] = hsc(cookieVar('comment_userid'));
 				}
 			} else {
 				if ($mode == 'edit') {
