@@ -34,7 +34,7 @@ class NP_NucBB extends NucleusPlugin {
 	
 	function init() {
 		// include language file for this plugin
-		$language = ereg_replace( '[\\|/]', '', getLanguageName());
+		$language = str_replace( array('\\','/'), '', getLanguageName());
 		if (file_exists($this->getDirectory().$language.'.php'))
 			include_once($this->getDirectory().$language.'.php');
 		include_once($this->getDirectory().'english.php');
@@ -497,7 +497,7 @@ COMMNETFORMLOGINED;
 				}
 				
 				// intercept words that are too long
-				if (eregi("[a-zA-Z0-9|\.,;:!\?=\/\\]{90,90}",$body) != false) 
+				if (preg_match("@[a-zA-Z0-9|\.,;:!\?=/\\]{90,90}@i",$body) != false) 
 					return _ERROR_COMMENT_LONGWORD;
 
 				// check length
