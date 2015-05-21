@@ -190,9 +190,9 @@ COMMNETFORMLOGINED;
 	  */
 	function unInstall() {
 		if ($this->getOption('deletetable') == 'yes') {
-			mysql_query('DROP TABLE ' . sql_table('plugin_nucbb'));
-			mysql_query('DROP TABLE ' . sql_table('plugin_nucbb_blogs'));
-			mysql_query('DROP TABLE ' . sql_table('plugin_nucbb_comments'));
+			sql_query('DROP TABLE ' . sql_table('plugin_nucbb'));
+			sql_query('DROP TABLE ' . sql_table('plugin_nucbb_blogs'));
+			sql_query('DROP TABLE ' . sql_table('plugin_nucbb_comments'));
 		}
 	}
 	
@@ -331,7 +331,7 @@ COMMNETFORMLOGINED;
 				} else {
 					$password = md5(requestVar('nucbbpass'));
 					$query = sql_query("SELECT password FROM ". sql_table('plugin_nucbb') ." WHERE item_id = '$itemid'");
-					$this->userinfo = mysql_fetch_object($query);
+					$this->userinfo = sql_fetch_object($query);
 					if (!$password || $password != $this->userinfo->password)
 						return _NUCBB_WRONGPASSWORD;
 					
@@ -379,8 +379,8 @@ COMMNETFORMLOGINED;
 					$password = md5(requestVar('nucbbpass'));
 
 					$query = sql_query("SELECT password FROM ". sql_table('plugin_nucbb') ." WHERE item_id = '$itemid'");
-					$this->userinfo = mysql_fetch_object($query);
-					mysql_free_result($query);
+					$this->userinfo = sql_fetch_object($query);
+					sql_free_result($query);
 					if (!$password || $password != $this->userinfo->password)
 						return _NUCBB_WRONGPASSWORD;
 				}
@@ -478,8 +478,8 @@ COMMNETFORMLOGINED;
 				} else {
 					$password = requestVar('nucbbpass');
 					$query = sql_query("SELECT password FROM ". sql_table('plugin_nucbb_comments') ." WHERE comment_id = '$commentid'");
-					$r = mysql_fetch_object($query);
-					mysql_free_result($query);
+					$r = sql_fetch_object($query);
+					sql_free_result($query);
 					$this->cacheditem = $itemid;
 					if (!$password || (md5($password) != $r->password))
 						return _NUCBB_WRONGPASSWORD;
@@ -542,8 +542,8 @@ COMMNETFORMLOGINED;
 				} else {
 					$password = requestVar('nucbbpass');
 					$query = sql_query("SELECT password FROM ". sql_table('plugin_nucbb_comments') ." WHERE comment_id = '$commentid'");
-					$r = mysql_fetch_object($query);
-					mysql_free_result($query);
+					$r = sql_fetch_object($query);
+					sql_free_result($query);
 					$this->cacheditem = $itemid;
 					if (!$password || (md5($password) != $r->password))
 						return _NUCBB_WRONGPASSWORD;
@@ -577,8 +577,8 @@ COMMNETFORMLOGINED;
 									. "password "
 									. "FROM ". sql_table('plugin_nucbb') 
 									." WHERE item_id = '$itemid'");
-					$this->userinfo = mysql_fetch_object($query);
-					mysql_free_result($query);
+					$this->userinfo = sql_fetch_object($query);
+					sql_free_result($query);
 					$this->cacheditem = $itemid;
 					if (!$password || md5($password) != $this->userinfo->password)
 						return _NUCBB_WRONGPASSWORD;
@@ -608,8 +608,8 @@ COMMNETFORMLOGINED;
 										. "password "
 										. "FROM ". sql_table('plugin_nucbb') 
 										." WHERE item_id = '$itemid'");
-						$this->userinfo = mysql_fetch_object($query);
-						mysql_free_result($query);
+						$this->userinfo = sql_fetch_object($query);
+						sql_free_result($query);
 						$this->cacheditem = $itemid;
 						if (requestVar('deledit') == 'del') {
 							$head = _NUCBB_CONFIRMDELETEITEM ._NUCBB_PASSWORDREQUEST;
@@ -648,8 +648,8 @@ EDITITEMFORM;
 				if (!$member->isloggedin()) {
 					$password = requestVar('pass');
 					$query = sql_query("SELECT password FROM ". sql_table('plugin_nucbb_comments') ." WHERE comment_id = '$commentid'");
-					$r = mysql_fetch_object($query);
-					mysql_free_result($query);
+					$r = sql_fetch_object($query);
+					sql_free_result($query);
 					if (!$password || (md5($password) != $r->password))
 						return _NUCBB_WRONGPASSWORD;
 					if (requestVar('deledit') == 'del') {
@@ -730,21 +730,21 @@ EDITCOMMENTFORM;
 	function event_PostDeleteBlog(&$data)
 	{
 		$q = "DELETE FROM ".sql_table('plugin_nucbb')." WHERE blogid = ".$data['blogid'];
-		mysql_query($q);
+		sql_query($q);
 		$q = "DELETE FROM ".sql_table('plugin_nucbb_blogs')." WHERE blog_id = ".$data['blogid'];
-		mysql_query($q);
+		sql_query($q);
 	}
 
 	function event_PostDeleteItem(&$data)
 	{
 		$q = "DELETE FROM ".sql_table('plugin_nucbb')." WHERE item_id = ".$data['itemid'];
-		mysql_query($q);
+		sql_query($q);
 	}
 
 	function event_PostDeleteComment(&$data)
 	{
 		$q = "DELETE FROM ".sql_table('plugin_nucbb_comments')." WHERE comment_id = ".$data['commentid'];
-		mysql_query($q);
+		sql_query($q);
 	}
 
 	function createNewBlog($name, $desc, $short, $skin)
@@ -785,7 +785,7 @@ EDITCOMMENTFORM;
 		// create blog
 		$query = 'INSERT INTO '.sql_table('blog')." (bname, bshortname, bdesc, btimeoffset, bdefskin, burl) VALUES ('$bname', '$bshortname', '$bdesc', '$btimeoffset', '$bdefskin', '$burl')";
 		sql_query($query);
-		$blogid    = mysql_insert_id();
+		$blogid    = sql_insert_id();
 		$blog    =& $manager->getBlog($blogid);
 		
 		// register database
@@ -793,7 +793,7 @@ EDITCOMMENTFORM;
 		
 		// create new category
 		sql_query('INSERT INTO '.sql_table('category')." (cblog, cname, cdesc) VALUES ($blogid, 'General','Items that do not fit in other categories')");
-		$catid = mysql_insert_id();
+		$catid = sql_insert_id();
 		
 		// set as default category
 		$blog->setDefaultCategory($catid);
@@ -849,8 +849,8 @@ EDITCOMMENTFORM;
 		if ($bid == $this->currentblog) return 1;
 		$query = "SELECT * FROM ".sql_table('plugin_nucbb_blogs')." WHERE blog_id = ".$bid;
 		$result = sql_query($query);
-		$rows = mysql_num_rows($result);
-		mysql_free_result($result);
+		$rows = sql_num_rows($result);
+		sql_free_result($result);
 		if ($rows) {
 			$this->currentblog = $bid;
 			return 1;
@@ -896,9 +896,9 @@ EDITCOMMENTFORM;
 		if ($this->getBlogOption($data['comment']['blogid'], 'allowphoto') == 'yes') {
 			$res = sql_query('SELECT imagelink FROM ' . sql_table('plugin_nucbb_comments')
 							. ' WHERE comment_id = '. $data['comment']['commentid']);
-			$com = mysql_fetch_array($res);
+			$com = sql_fetch_array($res);
 			$link = stripslashes($com['imagelink']);
-			mysql_free_result($res);
+			sql_free_result($res);
 			if ($link) {
 				$comment =  &$data["comment"];
 				if ($manager->pluginInstalled('NP_Thumbnail')) {
@@ -963,8 +963,8 @@ EDITCOMMENTFORM;
 							. "originaldate as date "
 							. "FROM ". sql_table('plugin_nucbb') 
 							. " WHERE item_id = '$iid'" );
-			$this->userinfo = mysql_fetch_object($query);
-			mysql_free_result($query);
+			$this->userinfo = sql_fetch_object($query);
+			sql_free_result($query);
 			if (!$this->userinfo) {
 				$this->userinfo = MEMBER::createFromID($item->authorid);
 				$this->userinfo->date = $item->timestamp;
@@ -1084,8 +1084,8 @@ EDITCOMMENTFORM;
 					$query = "SELECT mail FROM ". sql_table('plugin_nucbb_comments') ." WHERE comment_id = ".$comment['commentid'];
 					
 					$result = sql_query($query);
-					$r = mysql_fetch_assoc($result);
-					mysql_free_result($result);
+					$r = sql_fetch_assoc($result);
+					sql_free_result($result);
 					echo $r['mail'];
 				}
 				break;
@@ -1098,8 +1098,8 @@ EDITCOMMENTFORM;
 					$query = "SELECT mail FROM ". sql_table('plugin_nucbb_comments') ." WHERE comment_id = ".$comment['commentid'];
 					
 					$result = sql_query($query);
-					$r = mysql_fetch_assoc($result);
-					mysql_free_result($result);
+					$r = sql_fetch_assoc($result);
+					sql_free_result($result);
 					$mail = $r['mail'];
 				}
 				if (strpos($mail, '@')) {
@@ -1136,9 +1136,9 @@ EDITCOMMENTFORM;
 				break;
 			case 'reply' :
 				$res = sql_query('SELECT citem FROM '.sql_table('comment').' WHERE cnumber=' . $comment['commentid']);
-				$r = mysql_fetch_object($res);
+				$r = sql_fetch_object($res);
 				$itemid = $r->citem;
-				mysql_free_result($res);
+				sql_free_result($res);
 //				$itemid = $item['itemid'];
 				$url = $CONF['ActionURL'].'?action=plugin&name=NucBB&type=replycomm&id='.$comment['commentid'];
 				echo '<input type="button" value="' . _NUCBB_REPLY . '" onclick="np_nucbb_sendreply(';
@@ -1146,9 +1146,9 @@ EDITCOMMENTFORM;
 				break;
 			case 'title' :
 				$res = sql_query('SELECT citem FROM '.sql_table('comment').' WHERE cnumber=' . $comment['commentid']);
-				$r = mysql_fetch_object($res);
+				$r = sql_fetch_object($res);
 				$itemid = $r->citem;
-				mysql_free_result($res);
+				sql_free_result($res);
 				$manager->loadClass('ITEM');
 				$item = ITEM::getItem($itemid,0,0);
 				echo 'Re: '.$item['title'];
@@ -1279,7 +1279,7 @@ EDITCOMMENTFORM;
 				$replace_array['<%photoupload%>'] = '';
 			}
 
-			while ($data = mysql_fetch_assoc($res)) {
+			while ($data = sql_fetch_assoc($res)) {
 				$menu .= '<option value="' . $data['catid'] . '"';
 				if ($defcatid == $data['catid'])
 					$menu .= ' selected="selected">';
@@ -1287,7 +1287,7 @@ EDITCOMMENTFORM;
 					$menu .= '>';
 				$menu .= $data['catname'] . "</option>\n";
 			}
-			mysql_free_result($res);
+			sql_free_result($res);
 			$menu .= '</select>';
 			$replace_array['<%categories%>'] = $menu;
 			$replace_array['<%blogid%>'] = $bid;
@@ -1360,8 +1360,8 @@ EDITCOMMENTFORM;
 				$replace_array['<%contents%>'] = removeBreaks($comment['body']);
 				$query = "SELECT mail FROM ". sql_table('plugin_nucbb_comments') ." WHERE comment_id = ".$id;
 				$result = sql_query($query);
-				$r = mysql_fetch_assoc($result);
-				mysql_free_result($result);
+				$r = sql_fetch_assoc($result);
+				sql_free_result($result);
 				$replace_array['<%mail%>'] = $r['mail'];
 			}
 			$replace_array['<%redirecturl%>'] = $url;
