@@ -15,9 +15,9 @@ class NP_NucBB extends NucleusPlugin {
 	var $commentid;
 
 	function getName() { 		return 'NucBB'; }
-	function getAuthor()  {		return 'Andy'; }
+	function getAuthor()  {		return 'Andy,yamamoto'; }
 	function getURL() {			return ''; }
-	function getVersion() {		return '0.971'; }
+	function getVersion() {		return '0.98'; }
 	function getMinNucleusVersion() {
 		return 360;
 	}
