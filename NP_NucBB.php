@@ -19,7 +19,7 @@ class NP_NucBB extends NucleusPlugin {
 	function getURL() {			return ''; }
 	function getVersion() {		return '0.971'; }
 	function getMinNucleusVersion() {
-		return 220;
+		return 360;
 	}
 
 	function supportsFeature($what) {
