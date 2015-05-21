@@ -35,7 +35,7 @@ class NP_NucBB extends NucleusPlugin {
 	function init() {
 		// include language file for this plugin
 		$language = str_replace( array('\\','/'), '', getLanguageName());
-		if (file_exists($this->getDirectory().$language.'.php'))
+		if (is_file($this->getDirectory().$language.'.php'))
 			include_once($this->getDirectory().$language.'.php');
 		include_once($this->getDirectory().'english.php');
 		if (!$_SERVER["REQUEST_URI"])
