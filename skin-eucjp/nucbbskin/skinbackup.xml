@@ -1,0 +1,403 @@
+<nucleusskin>
+	<meta>
+		<skin name="NucBBskin" />
+		<template name="nucbb/index" />
+		<template name="nucbb/item" />
+	</meta>
+
+
+	<skin name="NucBBskin" type="text/html" includeMode="skindir" includePrefix="nucbbskin/">
+		<description>NucBB default skin based on Nucleus default skin</description>
+		<part name="archive"><![CDATA[<%parsedinclude(head.inc)%>
+
+<!-- page header -->
+<%parsedinclude(header.inc)%>
+
+<!-- page content -->
+<div id="container">
+<div class="content">
+<div class="contenttitle">
+<h2>Archives</h2>
+</div>
+You are currently viewing archive for <%archivedate(%Y/%m)%>
+</div>
+<div class="content">
+<%NucBB%>
+
+<%archive(nucbb/index)%>
+</div>
+</div>
+
+<!-- page menu -->
+<h2 class="hidden">Sidebar</h2>
+<div id="sidebarcontainer">
+<%parsedinclude(sidebar.inc)%>
+</div>
+
+<!-- page footer -->
+<%parsedinclude(footer.inc)%>]]></part>
+
+		<part name="archivelist"><![CDATA[<%parsedinclude(head.inc)%>
+
+<!-- page header -->
+<%parsedinclude(header.inc)%>
+
+<!-- page content -->
+<div id="container">
+<div class="content">
+<div class="contenttitle">
+<h2>過去ログ</h2>
+</div>
+<dl>
+<dt>月別ログ</dt>
+<%archivelist(nucbb/index)%>
+</dl>
+</div>
+</div>
+
+<!-- page menu -->
+<h2 class="hidden">Sidebar</h2>
+<div id="sidebarcontainer">
+<%parsedinclude(sidebar.inc)%>
+</div>
+
+<!-- page footer -->
+<%parsedinclude(footer.inc)%>]]></part>
+
+		<part name="error"><![CDATA[<%parsedinclude(head.inc)%>
+
+<!-- page header -->
+<%parsedinclude(header.inc)%>
+
+<!-- page content -->
+<div id="container">
+<div class="content">
+<div class="contenttitle">
+<h2>Error!</h2>
+</div>
+<%errormessage%><br /><br />
+<a href="javascript:history.go(-1);">Go back</a>
+</div>
+</div>
+
+<!-- page menu -->
+<h2 class="hidden">Sidebar</h2>
+<div id="sidebarcontainer">
+<%parsedinclude(sidebar.inc)%>
+</div>
+
+<!-- page footer -->
+<%parsedinclude(footer.inc)%>]]></part>
+
+		<part name="imagepopup"><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+<title><%imagetext%></title>
+<style type="text/css">
+img { border: none; }
+body { margin: 0px; }
+</style>
+</head>
+
+<!-- image content -->
+<body onblur="window.close()">
+<a href="javascript:window.close();"><%image%></a>
+</body>
+
+</html>]]></part>
+
+		<part name="index"><![CDATA[<%parsedinclude(head.inc)%>
+
+<!-- page header -->
+<%parsedinclude(header.inc)%>
+
+<!-- page content -->
+<div id="container">
+<div class="content">
+<%NucBB%>
+
+<%blog(nucbb/index,10)%>
+</div>
+</div>
+
+<!-- page menu -->
+<h2 class="hidden">Sidebar</h2>
+<div id="sidebarcontainer">
+<%parsedinclude(sidebar.inc)%>
+</div>
+
+<!-- page footer -->
+<%parsedinclude(footer.inc)%>]]></part>
+
+		<part name="item"><![CDATA[<%parsedinclude(head.inc)%>
+
+<!-- page header -->
+<%parsedinclude(header.inc)%>
+
+<!-- page content -->
+<div id="container">
+<div class="content">
+<h2><a href="<%todaylink%>" title="return to Top">トップに戻る</a></h2>
+</div>
+<div class="content">
+<%item(nucbb/item)%>
+</div>
+<div class="content">
+<div class="contenttitle">
+<h2>Comments</h2>
+</div>
+<a name="c"></a>
+<%comments(nucbb/item)%>
+</div>
+<div class="content">
+<div class="contenttitle">
+<h2>Add Comment</h2>
+</div>
+<%NucBB(commentform)%>
+</div>
+</div>
+
+<!-- page menu -->
+<h2 class="hidden">Sidebar</h2>
+<div id="sidebarcontainer">
+<%parsedinclude(sidebar.inc)%>
+</div>
+
+<!-- page footer -->
+<%parsedinclude(footer.inc)%>]]></part>
+
+		<part name="member"><![CDATA[<%parsedinclude(head.inc)%>
+
+<!-- page header -->
+<%parsedinclude(header.inc)%>
+
+<!-- page content -->
+<div id="container">
+<div class="content">
+<div class="contenttitle">
+<h2>Info about <%member(name)%></h2>
+</div>
+Real name: <%member(realname)%>
+<br /><br />
+Website: <a href="<%member(url)%>"><%member(url)%></a>
+</div>
+<div class="content">
+<div class="contenttitle">
+<h2>Send message</h2>
+</div>
+<%membermailform%>
+</div>
+</div>
+
+<!-- page menu -->
+<h2 class="hidden">Sidebar</h2>
+<div id="sidebarcontainer">
+<%parsedinclude(sidebar.inc)%>
+</div>
+
+<!-- page footer -->
+<%parsedinclude(footer.inc)%>]]></part>
+
+		<part name="search"><![CDATA[<%parsedinclude(head.inc)%>
+
+<!-- page header -->
+<%parsedinclude(header.inc)%>
+
+<!-- page content -->
+<div id="container">
+<div class="content">
+<div class="contenttitle">
+<h2>Search Results</h2>
+</div>
+<%searchform%>
+</div>
+<div class="content">
+<%searchresults(nucbb/index)%>
+</div>
+</div>
+
+<!-- page menu -->
+<h2 class="hidden">Sidebar</h2>
+<div id="sidebarcontainer">
+<%parsedinclude(sidebar.inc)%>
+</div>
+
+<!-- page footer -->
+<%parsedinclude(footer.inc)%>]]></part>
+
+	</skin>
+
+
+	<template name="nucbb/index">
+		<description>NucBB index template</description>
+		<part name="ARCHIVELIST_LISTITEM"><![CDATA[<dd>
+<a href="<%archivelink%>" title="Archive for %B, %Y">%Y年%m月</a>
+</dd>]]></part>
+
+		<part name="CATLIST_HEADER"><![CDATA[<dd>
+<a href="<%blogurl%>" title="All categories">All</a>
+</dd>]]></part>
+
+		<part name="CATLIST_LISTITEM"><![CDATA[<dd>
+<a href="<%catlink%>" title="Category: <%catname%>"><%catname%></a>
+</dd>]]></part>
+
+		<part name="COMMENTS_BODY"><![CDATA[<div class="itemcomment id<%memberid%>">
+<div class="contentitem">
+<div class="contentitem2">
+Comment by: <a href="mailto:<%NucBB(mail)%>"><%user%></a> </div>
+<div class="contentitem2"><a href="<%userid%>">Home</a> 
+</div>
+<div class="contentitem2">
+<%NucBB(deleditlink)%>
+</div>
+</div>
+<div class="commentbody">
+<%body%>
+</div>
+<div class="commentinfo">
+<%NucBB(reply)%> <%date%> <%time%>
+</div>
+
+</div>]]></part>
+
+		<part name="COMMENTS_MANY"><![CDATA[Comments]]></part>
+
+		<part name="COMMENTS_ONE"><![CDATA[Comment]]></part>
+
+		<part name="COMMENTS_TOOMUCH"><![CDATA[<div class="contentitem3">
+<small class="contentitemcomments">
+<a href="<%itemlink%>#c" rel="bookmark" title="Add comment on '<%itemtitle%>'"><%commentcount%> <%commentword%></a>
+</small>
+</div>]]></part>
+
+		<part name="EDITLINK"><![CDATA[<div class="contentitem4">
+<small class="contentitemedit">
+<a href="<%editlink%>" title="Make changes to your entry" onclick="<%editpopupcode%>" >Edit item</a>
+</small>
+</div>]]></part>
+
+		<part name="FORMAT_DATE"><![CDATA[%Y/%m/%d]]></part>
+
+		<part name="FORMAT_TIME"><![CDATA[%X]]></part>
+
+		<part name="IMAGE_CODE"><![CDATA[<%image%>]]></part>
+
+		<part name="ITEM"><![CDATA[<div class="contenttitle">
+<h2><%NucBB(date,%Y/%m/%d)%>: <a href="<%itemlink%>" title="Read entry: <%title%>"><%title%></a></h2>
+</div>
+<div class="contentitem">
+<div class="contentitem1">
+<small class="contentitemcategory">
+Category: <a href="<%categorylink%>" title="Category: <%Category%>"><%Category%></a>
+</small>
+</div>
+<div class="contentitem2">
+Posted by: <a href="mailto:<%NucBB(mail)%>"><%NucBB(name)%></a> </div>
+<div class="contentitem2"><a href="<%NucBB(url)%>">Home</a> 
+</div>
+<div class="contentitem2">
+<%NucBB(deleditlink)%>
+</div>
+</div>
+<div class="contentbody">
+<%body%>
+<%morelink%>
+</div>
+<%NucBB(reply)%>
+<%NucBB(comments)%>
+<%NucBB(form)%>]]></part>
+
+		<part name="ITEM_FOOTER"><![CDATA[<hr>]]></part>
+
+		<part name="LOCALE"><![CDATA[en]]></part>
+
+		<part name="MEDIA_CODE"><![CDATA[<%media%>]]></part>
+
+		<part name="MORELINK"><![CDATA[<p>&raquo;
+<a href="<%itemlink%>#more" title="Read more on '<%title%>'">続きを読む</a>
+</p>]]></part>
+
+		<part name="POPUP_CODE"><![CDATA[<%popuplink%>]]></part>
+
+		<part name="SEARCH_HIGHLIGHT"><![CDATA[<span class="highlight">\0</span>]]></part>
+
+		<part name="SEARCH_NOTHINGFOUND"><![CDATA[No search results found for <b><%query%></b>]]></part>
+
+	</template>
+
+
+	<template name="nucbb/item">
+		<description>NucBB default item template</description>
+		<part name="COMMENTS_BODY"><![CDATA[<div class="itemcomment id<%memberid%>">
+<div class="contentitem">
+<div class="contentitem2">
+Comment by: <a href="mailto:<%NucBB(mail)%>"><%user%></a> </div>
+<div class="contentitem2"><a href="<%userid%>">Home</a> 
+</div>
+<div class="contentitem2">
+<%NucBB(deleditlink)%>
+</div>
+</div>
+<div class="commentbody">
+<%body%>
+</div>
+<div class="commentinfo">
+<%NucBB(reply)%> <%date%> <%time%>
+</div>
+</div>]]></part>
+
+		<part name="COMMENTS_MANY"><![CDATA[comments]]></part>
+
+		<part name="COMMENTS_NONE"><![CDATA[<div class="comments">No comments yet</div>]]></part>
+
+		<part name="COMMENTS_ONE"><![CDATA[comment]]></part>
+
+		<part name="EDITLINK"><![CDATA[<div class="contentitem4">
+<small class="contentitemedit">
+<a href="<%editlink%>" title="Make changes to your entry" onclick="<%editpopupcode%>" >Edit item</a>
+</small>
+</div>]]></part>
+
+		<part name="FORMAT_DATE"><![CDATA[%Y/%m/%d]]></part>
+
+		<part name="FORMAT_TIME"><![CDATA[%X]]></part>
+
+		<part name="IMAGE_CODE"><![CDATA[<%image%>]]></part>
+
+		<part name="ITEM"><![CDATA[<div class="contenttitle">
+<h2><%NucBB(date,%Y/%m/%d)%>: <a href="<%itemlink%>" title="Read entry: <%title%>"><%title%></a></h2>
+</div>
+<div class="contentitem">
+<div class="contentitem1">
+<small class="contentitemcategory">
+Category: <a href="<%categorylink%>" title="Category: <%Category%>"><%Category%></a>
+</small>
+</div>
+<div class="contentitem2">
+Posted by: <a href="mailto:<%NucBB(mail)%>"><%NucBB(name)%></a> </div>
+<div class="contentitem2"><a href="<%NucBB(url)%>">Home</a> 
+</div>
+<div class="contentitem2">
+<%NucBB(deleditlink)%>
+</div>
+</div>
+<div class="contentbody">
+<%body%>
+<%morelink%>
+</div>
+<%NucBB(reply)%>]]></part>
+
+		<part name="LOCALE"><![CDATA[en]]></part>
+
+		<part name="MEDIA_CODE"><![CDATA[<%media%>]]></part>
+
+		<part name="POPUP_CODE"><![CDATA[<%popuplink%>]]></part>
+
+		<part name="SEARCH_HIGHLIGHT"><![CDATA[<span class="highlight">\0</span>]]></part>
+
+	</template>
+
+
+</nucleusskin>
