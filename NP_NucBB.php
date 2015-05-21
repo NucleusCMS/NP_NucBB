@@ -1000,7 +1000,7 @@ EDITCOMMENTFORM;
 					$template =& $manager->getTemplate($currentTemplateName);
 				else
 					$template = TEMPLATE::read($currentTemplateName);
-				$parser =& new PARSER($itemactions->getDefinedActions(),$itemactions);
+				$parser = new PARSER($itemactions->getDefinedActions(),$itemactions);
 				$itemactions->setParser($parser);
 				$comments = new COMMENTS($item->itemid);
 				$comments->setItemActions($itemactions);
