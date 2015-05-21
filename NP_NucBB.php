@@ -223,8 +223,9 @@ COMMNETFORMLOGINED;
 					'return'	=> TRUE,
 					'ipblock'   => TRUE
 				);
-			
-				$manager->notify('SpamCheck', array ('spamcheck' => & $spamcheck));
+
+				$params = array ('spamcheck' => & $spamcheck);
+				$manager->notify('SpamCheck', $params);
 				if (isset($spamcheck['result']) && $spamcheck['result'] == true) {
 					return 'Spam Checked';
 				}
@@ -306,8 +307,9 @@ COMMNETFORMLOGINED;
 					'return'	=> TRUE,
 					'ipblock'   => TRUE
 				);
-			
-				$manager->notify('SpamCheck', array ('spamcheck' => & $spamcheck));
+
+				$params = array ('spamcheck' => & $spamcheck);
+				$manager->notify('SpamCheck', $params);
 				if (isset($spamcheck['result']) && $spamcheck['result'] == true) {
 					return _NUCBB_CANNOTUPDATE;
 				}
@@ -404,8 +406,9 @@ COMMNETFORMLOGINED;
 					'return'	=> TRUE,
 					'ipblock'   => TRUE
 				);
-			
-				$manager->notify('SpamCheck', array ('spamcheck' => & $spamcheck));
+
+				$params = array ('spamcheck' => & $spamcheck);
+				$manager->notify('SpamCheck', $params);
 				if (isset($spamcheck['result']) && $spamcheck['result'] == true) {
 					return _NUCBB_CANNOTUPDATE;
 				}
@@ -490,8 +493,9 @@ COMMNETFORMLOGINED;
 					'return'	=> TRUE,
 					'ipblock'   => TRUE
 				);
-			
-				$manager->notify('SpamCheck', array ('spamcheck' => & $spamcheck));
+
+				$params = array ('spamcheck' => & $spamcheck);
+				$manager->notify('SpamCheck', $params);
 				if (isset($spamcheck['result']) && $spamcheck['result'] == true) {
 					return _NUCBB_CANNOTUPDATE;
 				}
@@ -511,7 +515,8 @@ COMMNETFORMLOGINED;
 				$body = COMMENT::prepareBody($body);
 				
 				// call plugins
-				$manager->notify('PreUpdateComment',array('body' => &$body));
+				$params = array('body' => &$body);
+				$manager->notify('PreUpdateComment',$params);
 				
 				$query =  'UPDATE '.sql_table('comment'). " SET cbody='" .addslashes($body). "'";
 				if (!$member->isloggedin()) {
@@ -543,13 +548,15 @@ COMMNETFORMLOGINED;
 					if (!$password || (md5($password) != $r->password))
 						return _NUCBB_WRONGPASSWORD;
 				}
-				$manager->notify('PreDeleteComment', array('commentid' => $commentid));
+				$params = array('commentid' => $commentid);
+				$manager->notify('PreDeleteComment', $params);
 
 				// delete the comments associated with the item
 				$query = 'DELETE FROM '.sql_table('comment').' WHERE cnumber=' . $commentid;
 				sql_query($query);
 
-				$manager->notify('PostDeleteComment', array('commentid' => $commentid));
+				$params = array('commentid' => $commentid);
+				$manager->notify('PostDeleteComment', $params);
 
 				header('Location: '.requestVar('url'));
 				break;
@@ -757,14 +764,14 @@ EDITCOMMENTFORM;
 			return FALSE;
 		if ($manager->existsBlog($bshortname))
 			return FALSE;
-		$manager->notify('PreAddBlog',
-					array(
+		$params = 	array(
 					'name' => &$bname,
 					'shortname' => &$bshortname,
 					'timeoffset' => &$btimeoffset,
 					'description' => &$bdescription,
-					'defaultskin' => &$bdefskin)
-					);
+					'defaultskin' => &$bdefskin);
+
+		$manager->notify('PreAddBlog',$params);
 
 		// add slashes for sql queries
 		$bname = addslashes($bname);
@@ -803,9 +810,11 @@ EDITCOMMENTFORM;
 		$memberid = $nucbbuser->getID();
 		$query = 'INSERT INTO '.sql_table('team')." (tmember, tblog, tadmin) VALUES ($memberid, $blogid, 0)";
 		sql_query($query);
-		
-		$manager->notify('PostAddBlog',array('blog' => &$blog));
-		$manager->notify('PostAddCategory',array('catid' => $catid));
+
+		$params = array('blog' => &$blog);
+		$manager->notify('PostAddBlog',$params);
+		$params = array('catid' => $catid);
+		$manager->notify('PostAddCategory',$params);
 		return TRUE;
 	}
 
