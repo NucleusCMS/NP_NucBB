@@ -71,8 +71,8 @@ class NP_NucBB extends NucleusPlugin {
 		list($usec, $sec) = explode(' ', microtime());
 		mt_srand((float) $sec + ((float) $usec * 100000));
 		$password = strval(mt_rand());
-		if (!MEMBER::exists('NucBBUser')) {
-			MEMBER::create('NucBBUser', 'NucBB User', $password, $member->email, $member->url, 0, 0, "");
+		if (!$member->exists('NucBBUser')) {
+			$member->create('NucBBUser', 'NucBB User', $password, $member->email, $member->url, 0, 0, "");
 		}
 
 		$formnotlogined = <<<FORMNOTLOGINED
