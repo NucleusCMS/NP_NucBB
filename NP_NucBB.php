@@ -37,7 +37,7 @@ class NP_NucBB extends NucleusPlugin {
 		$language = str_replace( array('\\','/'), '', getLanguageName());
 		if (is_file($this->getDirectory().$language.'.php'))
 			include_once($this->getDirectory().$language.'.php');
-		include_once($this->getDirectory().'english.php');
+		else include_once($this->getDirectory().'english.php');
 		if (!$_SERVER["REQUEST_URI"])
 			$_SERVER["REQUEST_URI"] = serverVar("SCRIPT_NAME") . "?" . serverVar("QUERY_STRING"); 
 	}
